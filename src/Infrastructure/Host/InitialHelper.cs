@@ -5,7 +5,7 @@ using Serilog.Events;
 using Serilog.Formatting.Elasticsearch;
 using Serilog.Sinks.Elasticsearch;
 
-namespace Infrastructure
+namespace Infrastructure.Host
 {
     public static class InitialHelper 
     {

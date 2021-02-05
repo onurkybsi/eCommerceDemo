@@ -1,4 +1,4 @@
-namespace Infrastructure
+namespace Infrastructure.Host
 {
     public class ELKLoggerSettings
     {

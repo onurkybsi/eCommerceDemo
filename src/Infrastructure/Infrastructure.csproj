@@ -10,4 +10,9 @@
     <PackageReference Include="Serilog.Sinks.ElasticSearch" Version="8.4.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.11.5" />
+    <PackageReference Include="MongoDB.Bson" Version="2.11.5" />
+  </ItemGroup>
+
 </Project>
