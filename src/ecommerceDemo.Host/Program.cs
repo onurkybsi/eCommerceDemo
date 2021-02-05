@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using Infrastructure;
+using Infrastructure.Host;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;

@@ -1,3 +1,5 @@
+using Infrastructure.Data;
+using Infrastructure.Host;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +19,7 @@ namespace ecommerceDemo.Host
 
         public void ConfigureServices(IServiceCollection services)
         {
+            RegisterModules(services);
             services.AddControllers();
         }
 
@@ -37,6 +40,18 @@ namespace ecommerceDemo.Host
             });
 
             Serilog.Log.ForContext<Startup>().Information("{Application} is listening on {Env}...", Configuration["AppName"], env.EnvironmentName);
+        }
+
+        private void RegisterModules(IServiceCollection services)
+        {
+            services.RegisterModule(Data.Descriptor.GetDescriptor(new Data.DataModuleParameter
+            {
+                MongoDBSettings = new MongoDBSettings
+                {
+                    ConnectionString = Configuration["ecommerceDemoDb_ConnectionStrings"],
+                    DatabaseName = Configuration["ecommerceDemoDb_DatabaseName"],
+                }
+            }));
         }
     }
 }
