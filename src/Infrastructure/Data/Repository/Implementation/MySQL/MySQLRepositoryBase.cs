@@ -9,9 +9,9 @@ namespace Infrastructure.Data
 {
     public abstract class MySQLRepositoryBase<TEntity> : IEntityRepository<TEntity> where TEntity : Entity
     {
-        private AdvancedDbContext _context;
+        private DbContextWrapper _context;
 
-        public MySQLRepositoryBase(AdvancedDbContext context)
+        public MySQLRepositoryBase(DbContextWrapper context)
         {
             _context = context;
         }

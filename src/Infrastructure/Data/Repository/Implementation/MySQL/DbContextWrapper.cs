@@ -2,11 +2,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
-    public class AdvancedDbContext : DbContext
+    public class DbContextWrapper : DbContext
     {
         protected IDatabaseSettings _databaseSettings;
 
-        public AdvancedDbContext(IDatabaseSettings databaseSettings)
+        public DbContextWrapper(IDatabaseSettings databaseSettings)
         {
             _databaseSettings = databaseSettings;
         }

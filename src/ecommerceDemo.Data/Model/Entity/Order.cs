@@ -4,9 +4,9 @@ namespace ecommerceDemo.Data.Model
 {
     public class Order : Entity
     {
+        public User Owner { get; set; }
         public Basket Basket { get; set; }
-        public bool Shipped { get; set; }
         public Address Address { get; set; }
-        public bool GiftWrap { get; set; }
+        public bool Shipped { get; set; }
     }
 }

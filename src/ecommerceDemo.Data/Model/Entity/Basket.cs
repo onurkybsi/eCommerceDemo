@@ -5,6 +5,6 @@ namespace ecommerceDemo.Data.Model
 {
     public class Basket : Entity
     {
-        public List<Product> Products { get; set; }
+        public ICollection<Product> Products { get; set; } 
     }
 }

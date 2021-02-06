@@ -4,13 +4,13 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Infrastructure.Data
 {
-    public class Entity
+    public abstract class Entity
     {
         [BsonIgnore]
         public int Id { get; set; }
         [NotMapped]
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string MongoDBObjectId { get; set; }
+        public string ObjectId { get; set; }
     }
 }

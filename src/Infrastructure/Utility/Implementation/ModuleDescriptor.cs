@@ -7,7 +7,7 @@ namespace Infrastructure.Utility
     /// <summary>
     /// Generic abstract IModuleDescriptor base implementation
     /// </summary>
-    public abstract class ModuleDescriptor<TModule, TModuleParameter> : IModuleDescriptor
+    public abstract class ModuleDescriptor<TModule, TModuleContext> : IModuleDescriptor
     {
         protected static TModule instance;
 
@@ -19,8 +19,8 @@ namespace Infrastructure.Utility
         /// <returns>
         /// Returns the described module descriptor
         /// </returns>
-        public static TModule GetDescriptor(TModuleParameter moduleParameter)
-            => instance ?? (instance = (TModule)Activator.CreateInstance(typeof(TModule), moduleParameter));
+        public static TModule GetDescriptor(TModuleContext moduleContext)
+            => instance ?? (instance = (TModule)Activator.CreateInstance(typeof(TModule), moduleContext));
 
         public abstract List<ServiceDescriptor> GetDescriptions();
 

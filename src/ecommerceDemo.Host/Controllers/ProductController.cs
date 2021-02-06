@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace ecommerceDemo.Host.Controllers
 {
     // [Authorize]
-    // [ApiController]
     [Route("[controller]/[action]")]
+    [ApiController]
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
@@ -13,12 +13,6 @@ namespace ecommerceDemo.Host.Controllers
         public ProductController(IProductRepository productRepository)
         {
             _productRepository = productRepository;
-        }
-
-        [HttpGet]
-        public IActionResult GetAllProducts(IProductRepository productRepository)
-        {
-            return Ok(_productRepository.GetList());
         }
     }
 }
