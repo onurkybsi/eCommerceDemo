@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using ecommerceDemo.Data.Model;
 
-namespace ecommerce.Data.Utility
+namespace ecommerceDemo.Data.Utility
 {
     public static class FakeDataGenerator 
     {

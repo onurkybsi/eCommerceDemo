@@ -9,7 +9,7 @@ namespace ecommerceDemo.Data
 {
     public class Descriptor : ModuleDescriptor<Data.Descriptor, DataModuleContext>
     {
-        private static DataModuleContext _dataModuleContext;
+        internal static DataModuleContext _dataModuleContext;
 
         public Descriptor(DataModuleContext dataModuleContext)
         {
@@ -53,11 +53,11 @@ namespace ecommerceDemo.Data
 
         private static List<ServiceDescriptor> MySQLRepositoryDescriptions = new List<ServiceDescriptor>
         {
-            ServiceDescriptor.Singleton<IProductRepository, Repository.MySQL.ProductRepository>(sp => new Repository.MySQL.ProductRepository(sp.GetRequiredService<Repository.MySQL.ecommerceDbContext>())),
-            ServiceDescriptor.Singleton<IOrderRepository, Repository.MySQL.OrderRepository>(sp => new Repository.MySQL.OrderRepository(sp.GetRequiredService<Repository.MySQL.ecommerceDbContext>())),
-            ServiceDescriptor.Singleton<ICategoryRepository, Repository.MySQL.CategoryRepository>(sp => new Repository.MySQL.CategoryRepository(sp.GetRequiredService<Repository.MySQL.ecommerceDbContext>())),
-            ServiceDescriptor.Singleton<IAddressRepository, Repository.MySQL.AddressRepository>(sp => new Repository.MySQL.AddressRepository(sp.GetRequiredService<Repository.MySQL.ecommerceDbContext>())),
-            ServiceDescriptor.Singleton<IBasketRepository, Repository.MySQL.BasketRepository>(sp => new Repository.MySQL.BasketRepository(sp.GetRequiredService<Repository.MySQL.ecommerceDbContext>()))
+            ServiceDescriptor.Singleton<IProductRepository, Repository.MySQL.ProductRepository>(sp => new Repository.MySQL.ProductRepository(sp.GetRequiredService<Repository.MySQL.ecommerceDbContext>()))
+            ServiceDescriptor.Singleton<IOrderRepository>(sp => new Repository.MySQL.OrderRepository(sp.GetRequiredService<Repository.MySQL.ecommerceDbContext>())),
+            ServiceDescriptor.Singleton<ICategoryRepository>(sp => new Repository.MySQL.CategoryRepository(sp.GetRequiredService<Repository.MySQL.ecommerceDbContext>())),
+            ServiceDescriptor.Singleton<IAddressRepository>(sp => new Repository.MySQL.AddressRepository(sp.GetRequiredService<Repository.MySQL.ecommerceDbContext>())),
+            ServiceDescriptor.Singleton<IBasketRepository>(sp => new Repository.MySQL.BasketRepository(sp.GetRequiredService<Repository.MySQL.ecommerceDbContext>()))
         };
 
         private static List<ServiceDescriptor> Descriptions = new List<ServiceDescriptor>
@@ -74,7 +74,6 @@ namespace ecommerceDemo.Data
             else
             {
                 Descriptions.AddRange(MySQLRepositoryDescriptions);
-
             }
 
             return Descriptions;

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Infrastructure.Data;
 using Infrastructure.Host;
 using Microsoft.AspNetCore.Builder;
@@ -19,12 +21,32 @@ namespace ecommerceDemo.Host
 
         public void ConfigureServices(IServiceCollection services)
         {
-            RegisterModules(services);
+            // RegisterModules(services);
+            services.AddSingleton<ecommerceDemo.Data.Repository.MySQL.ecommerceDbContext>(sp => new Data.Repository.MySQL.ecommerceDbContext(new MySQLDatabaseSettings
+            {
+                ConnectionString = Configuration["ecommerceDemoDb_ConnectionStrings_MySQL"]
+            }));
+            services.AddSingleton<ecommerceDemo.Data.Repository.IProductRepository, ecommerceDemo.Data.Repository.MySQL.ProductRepository>(
+                sp => new Data.Repository.MySQL.ProductRepository(sp.GetRequiredService<ecommerceDemo.Data.Repository.MySQL.ecommerceDbContext>())
+            );
             services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            // Data.Utility.Initializer.ecommerceDb.InitializeRepository<Data.Model.Product>(Data.Model.DbType.MySQL, new List<Data.Model.Product>
+            // {
+            //     new Data.Model.Product
+            //     {
+            //         Name = "testProduct",
+            //         Category = new Data.Model.Category
+            //         {
+            //             Name = "testCategory"
+            //         }
+            //     }
+            // });
+
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
             else
@@ -32,12 +54,16 @@ namespace ecommerceDemo.Host
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            // app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            var ctx = app.ApplicationServices.GetRequiredService<ecommerceDemo.Data.Repository.MySQL.ecommerceDbContext>();
+
+            var test = ctx.Products.Where(p => p.Id == 1).FirstOrDefault();
 
             Serilog.Log.ForContext<Startup>().Information("{Application} is listening on {Env}...", Configuration["AppName"], env.EnvironmentName);
         }
@@ -55,7 +81,7 @@ namespace ecommerceDemo.Host
                 {
                     ConnectionString = Configuration["ecommerceDemoDb_ConnectionStrings_MySQL"]
                 },
-                DbType = Data.Model.DbType.MongoDB
+                DbType = Data.Model.DbType.MySQL
             }));
         }
     }

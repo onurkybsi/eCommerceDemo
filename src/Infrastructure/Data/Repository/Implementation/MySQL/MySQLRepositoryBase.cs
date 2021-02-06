@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
-    public class MySQLRepositoryBase<TEntity> : IEntityRepository<TEntity> where TEntity : Entity
+    public abstract class MySQLRepositoryBase<TEntity> : IEntityRepository<TEntity> where TEntity : Entity
     {
         private AdvancedDbContext _context;
 

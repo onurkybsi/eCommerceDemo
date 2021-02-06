@@ -8,20 +8,20 @@ namespace ecommerceDemo.Data.Repository.MySQL
     public class ecommerceDbContext : AdvancedDbContext
     {
         public DbSet<Product> Products { get; set; }
-        public DbSet<Basket> Baskets { get; set; }
+        // public DbSet<Basket> Baskets { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Address> Addresses { get; set; }
+        // public DbSet<Order> Orders { get; set; }
+        // public DbSet<Address> Addresses { get; set; }
 
         public ecommerceDbContext(IDatabaseSettings databaseSettings) : base(databaseSettings) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             ModelProductEntity(modelBuilder);
-            ModelBasketEntity(modelBuilder);
-            ModelCategoryEntity(modelBuilder);
-            ModelOrderEntity(modelBuilder);
-            ModelAddressEntity(modelBuilder);
+            // ModelBasketEntity(modelBuilder);
+            // ModelCategoryEntity(modelBuilder);
+            // ModelOrderEntity(modelBuilder);
+            // ModelAddressEntity(modelBuilder);
         }
 
         private void ModelProductEntity(ModelBuilder modelBuilder)
@@ -31,6 +31,7 @@ namespace ecommerceDemo.Data.Repository.MySQL
                 entity.Property(e => e.Id)
                         .ValueGeneratedOnAdd();
 
+                entity.HasOne(p => p.Category);
             });
         }
 
