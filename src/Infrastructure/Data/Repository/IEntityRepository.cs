@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    public interface IEntityRepository<T> where T : class, IEntity, new()
+    public interface IEntityRepository<T> where T : Entity
     {
         Task<T> Get(Expression<Func<T, bool>> filter);
         Task<List<T>> GetList(Expression<Func<T, bool>> filter = null);

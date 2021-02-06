@@ -9,7 +9,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ElasticsearchURL": "http://localhost:9200",
-        "ecommerceDemoDb_ConnectionStrings": "mongodb://localhost:27017"
+        "ecommerceDemoDb_ConnectionStrings_MongoDB": "mongodb://localhost:27017",
+        "ecommerceDemoDb_ConnectionStrings_MySQL": "server=localhost;port=3306;user=root;password=Mysqlparola123;database=ecommerceDemoDb"
       }
     }
   }

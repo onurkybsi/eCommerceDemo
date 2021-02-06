@@ -2,7 +2,7 @@ using Infrastructure.Data;
 
 namespace ecommerceDemo.Data.Model
 {
-    public class Category : MongoDBEntity
+    public class Category : Entity
     {
         public string Name { get; set; }
     }

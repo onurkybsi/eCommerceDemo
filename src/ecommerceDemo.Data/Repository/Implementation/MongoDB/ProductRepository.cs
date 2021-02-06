@@ -1,7 +1,7 @@
 using Infrastructure.Data;
 using ecommerceDemo.Data.Model;
 
-namespace ecommerceDemo.Data.Repository
+namespace ecommerceDemo.Data.Repository.MongoDB
 {
     public class ProductRepository : MongoDBCollectionBase<Product>, IProductRepository
     {

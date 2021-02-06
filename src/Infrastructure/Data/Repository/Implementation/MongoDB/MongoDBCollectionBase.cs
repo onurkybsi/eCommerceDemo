@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace Infrastructure.Data
 {
-    public abstract class MongoDBCollectionBase<T> : IEntityRepository<T> where T : MongoDBEntity, new()
+    public abstract class MongoDBCollectionBase<T> : IEntityRepository<T> where T : Entity
     {
         protected readonly IMongoCollection<T> _collection;
 
@@ -28,7 +28,7 @@ namespace Infrastructure.Data
             => await _collection.InsertOneAsync(entity);
 
         public Task Update(T entity)
-            => string.IsNullOrEmpty(entity.Id) ? Task.CompletedTask : _collection.ReplaceOneAsync(e => e.Id == entity.Id, entity);
+            => string.IsNullOrEmpty(entity.MongoDBObjectId) ? Task.CompletedTask : _collection.ReplaceOneAsync(e => e.Id == entity.Id, entity);
 
         // It will be changed. This may not be optimal solution
         public async Task FindAndUpdate(Expression<Func<T, bool>> filterDefinition, Action<T> updateDefinition)

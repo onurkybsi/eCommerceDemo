@@ -44,13 +44,18 @@ namespace ecommerceDemo.Host
 
         private void RegisterModules(IServiceCollection services)
         {
-            services.RegisterModule(Data.Descriptor.GetDescriptor(new Data.DataModuleParameter
+            services.RegisterModule(Data.Descriptor.GetDescriptor(new Data.Model.DataModuleContext
             {
                 MongoDBSettings = new MongoDBSettings
                 {
-                    ConnectionString = Configuration["ecommerceDemoDb_ConnectionStrings"],
+                    ConnectionString = Configuration["ecommerceDemoDb_ConnectionStrings_MongoDB"],
                     DatabaseName = Configuration["ecommerceDemoDb_DatabaseName"],
-                }
+                },
+                MySQLSettings = new MySQLDatabaseSettings
+                {
+                    ConnectionString = Configuration["ecommerceDemoDb_ConnectionStrings_MySQL"]
+                },
+                DbType = Data.Model.DbType.MongoDB
             }));
         }
     }

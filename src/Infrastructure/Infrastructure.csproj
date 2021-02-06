@@ -15,4 +15,8 @@
     <PackageReference Include="MongoDB.Bson" Version="2.11.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.21" />
+  </ItemGroup>
+
 </Project>
