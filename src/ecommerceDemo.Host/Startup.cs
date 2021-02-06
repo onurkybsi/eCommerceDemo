@@ -21,7 +21,15 @@ namespace ecommerceDemo.Host
         {
             RegisterModules(services);
 
-            services.AddControllers();
+            services.AddBasicJwtAuthentication(new JwtAuthenticationContext
+            {
+                SecurityKey = Configuration["Jwt_SecurityKey"],
+                Issuer = Configuration["Jwt_Issuer"],
+                Audience = Configuration["Jwt_Audience"],
+                Environment = Configuration.GetAspNetCoreEnvironment()
+            });
+
+            services.AddControllers().AddNewtonsoftJson();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -33,7 +41,8 @@ namespace ecommerceDemo.Host
 
             app.UseRouting();
 
-            // app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

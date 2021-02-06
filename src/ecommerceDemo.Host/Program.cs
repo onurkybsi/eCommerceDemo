@@ -14,7 +14,7 @@ namespace ecommerceDemo.Host
     {
         public static void Main(string[] args)
         {
-            var configuration = InitialHelper.GetConfiguration(Directory.GetCurrentDirectory(), Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+            var configuration = InitialHelper.GetConfiguration(Directory.GetCurrentDirectory(), System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
 
             Log.Logger = InitialHelper.CreateELKLogger(new ELKLoggerSettings
             {

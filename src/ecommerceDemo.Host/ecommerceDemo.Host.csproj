@@ -8,5 +8,8 @@
     <ProjectReference Include="..\ecommerceDemo.Data\ecommerceDemo.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10" />
+  </ItemGroup>
 
 </Project>
