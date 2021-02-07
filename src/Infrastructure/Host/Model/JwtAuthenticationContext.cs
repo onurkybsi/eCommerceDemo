@@ -1,10 +1,7 @@
-namespace Infrastructure.Host
+namespace Infrastructure.Host.Model
 {
-    public class JwtAuthenticationContext
+    public class JwtAuthenticationContext : JwtAuthenticationBaseContext
     {
-        public string SecurityKey { get; set; }
-        public string Issuer { get; set; }
-        public string Audience { get; set; }
         public Environment Environment { get; set; }
     }
 }

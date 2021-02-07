@@ -21,7 +21,7 @@ namespace ecommerceDemo.Host
         {
             RegisterModules(services);
 
-            services.AddBasicJwtAuthentication(new JwtAuthenticationContext
+            services.AddBasicJwtAuthentication(new Infrastructure.Host.Model.JwtAuthenticationContext
             {
                 SecurityKey = Configuration["Jwt_SecurityKey"],
                 Issuer = Configuration["Jwt_Issuer"],
@@ -67,6 +67,17 @@ namespace ecommerceDemo.Host
                     ConnectionString = Configuration["ecommerceDemoDb_ConnectionStrings_MySQL"]
                 }
             }));
+
+            services.RegisterModule(Service.Descriptor.GetDescriptor(new Service.Model.ServiceModuleContext
+            {
+                JwtAuthenticationContext = new Infrastructure.Service.Model.JwtAuthenticationContext
+                {
+                    SecurityKey = Configuration["Jwt_SecurityKey"],
+                    Issuer = Configuration["Jwt_Issuer"],
+                    Audience = Configuration["Jwt_Audience"],
+                    // GetUserAction =  
+                }
+          }));
         }
     }
 }
