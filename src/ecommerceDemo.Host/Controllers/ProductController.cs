@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ecommerceDemo.Data.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,12 @@ namespace ecommerceDemo.Host.Controllers
         public ProductController(IProductRepository productRepository)
         {
             _productRepository = productRepository;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllProducts()
+        {
+            return Ok(await _productRepository.GetList());
         }
     }
 }

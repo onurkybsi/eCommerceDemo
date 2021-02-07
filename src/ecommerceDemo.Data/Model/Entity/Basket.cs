@@ -3,8 +3,9 @@ using Infrastructure.Data;
 
 namespace ecommerceDemo.Data.Model
 {
-    public class Basket : Entity
+    public class Basket : IEntity
     {
-        public ICollection<Product> Products { get; set; } 
+        public object Id { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 }

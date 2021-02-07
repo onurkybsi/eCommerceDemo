@@ -3,5 +3,5 @@ using ecommerceDemo.Data.Model;
 
 namespace ecommerceDemo.Data.Repository
 {
-    public interface IBasketRepository : IEntityRepository<Basket> { }
+    public interface IBasketRepository : IEntityRepository<Model.Basket> { }
 }

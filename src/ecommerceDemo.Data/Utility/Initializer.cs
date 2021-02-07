@@ -13,10 +13,10 @@ namespace ecommerceDemo.Data.Utility
         {
             public static void InitializeRepository<TEntity>(List<TEntity> initialData) where TEntity : class
             {
-                if (Data.Descriptor.ModuleContext.DatabaseType == DatabaseType.MongoDB)
-                    InitializeMongoDBRepository(initialData);
-                else
-                    InitializeMySQLRepository(initialData);
+                // if (Data.Descriptor.ModuleContext.DatabaseType == DatabaseType.MongoDB)
+                InitializeMongoDBRepository(initialData);
+                // else
+                //     InitializeMySQLRepository(initialData);
             }
 
             private static void InitializeMongoDBRepository<TEntity>(List<TEntity> initialData)
@@ -47,20 +47,20 @@ namespace ecommerceDemo.Data.Utility
                 return string.Empty;
             }
 
-            private static void InitializeMySQLRepository<TEntity>(List<TEntity> initialData) where TEntity : class
-            {
-                using (var context = new ecommerceDbContext(Descriptor.ModuleContext.MySQLSettings))
-                {
-                    if (context.Database.EnsureCreated())
-                    {
-                        var dbSet = context.Set<TEntity>();
+            // private static void InitializeMySQLRepository<TEntity>(List<TEntity> initialData) where TEntity : class
+            // {
+            //     using (var context = new ecommerceDbContext(Descriptor.ModuleContext.MySQLSettings))
+            //     {
+            //         if (context.Database.EnsureCreated())
+            //         {
+            //             var dbSet = context.Set<TEntity>();
 
-                        dbSet.AddRange(initialData);
+            //             dbSet.AddRange(initialData);
 
-                        context.SaveChanges();
-                    }
-                }
-            }
+            //             context.SaveChanges();
+            //         }
+            //     }
+            // }
         }
     }
 }

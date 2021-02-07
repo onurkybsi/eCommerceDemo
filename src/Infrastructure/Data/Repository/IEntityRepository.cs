@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    public interface IEntityRepository<T> where T : Entity
+    public interface IEntityRepository<TEntity> where TEntity : IEntity
     {
-        Task<T> Get(Expression<Func<T, bool>> filter);
-        Task<List<T>> GetList(Expression<Func<T, bool>> filter = null);
-        Task Create(T entity);
-        Task Update(T entity);
-        Task FindAndUpdate(Expression<Func<T, bool>> filterDefinition, Action<T> updateDefinition);
-        Task Remove(T entity);
+        Task<TEntity> Get(Expression<Func<TEntity, bool>> filter);
+        Task<List<TEntity>> GetList(Expression<Func<TEntity, bool>> filter = null);
+        Task Create(TEntity entity);
+        Task Update(TEntity entity);
+        Task FindAndUpdate(Expression<Func<TEntity, bool>> filterDefinition, Action<TEntity> updateDefinition);
+        Task Remove(TEntity entity);
     }
 }
