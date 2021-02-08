@@ -54,30 +54,29 @@ namespace ecommerceDemo.Host
 
         private void RegisterModules(IServiceCollection services)
         {
-            services.RegisterModule(Data.Descriptor.GetDescriptor(new Data.Model.DataModuleContext
-            {
-                DatabaseType = Data.Model.DatabaseType.MongoDB,
-                MongoDBSettings = new MongoDBSettings
-                {
-                    ConnectionString = Configuration["ecommerceDemoDb_ConnectionStrings_MongoDB"],
-                    DatabaseName = Configuration["ecommerceDemoDb_DatabaseName"],
-                },
-                MySQLSettings = new MySQLDatabaseSettings
-                {
-                    ConnectionString = Configuration["ecommerceDemoDb_ConnectionStrings_MySQL"]
-                }
-            }));
-
             services.RegisterModule(Service.Descriptor.GetDescriptor(new Service.Model.ServiceModuleContext
             {
+                DataModuleContext = new Data.Model.DataModuleContext
+                {
+                    DatabaseType = Data.Model.DatabaseType.MongoDB,
+                    MongoDBSettings = new MongoDBSettings
+                    {
+                        ConnectionString = Configuration["ecommerceDemoDb_ConnectionStrings_MongoDB"],
+                        DatabaseName = Configuration["ecommerceDemoDb_DatabaseName"],
+                    },
+                    MySQLSettings = new MySQLDatabaseSettings
+                    {
+                        ConnectionString = Configuration["ecommerceDemoDb_ConnectionStrings_MySQL"]
+                    }
+                },
                 JwtAuthenticationContext = new Infrastructure.Service.Model.JwtAuthenticationContext
                 {
                     SecurityKey = Configuration["Jwt_SecurityKey"],
                     Issuer = Configuration["Jwt_Issuer"],
                     Audience = Configuration["Jwt_Audience"],
-                    // GetUserAction =  
+                    GetUserAction = async (signInModel) => await services.BuildServiceProvider().GetRequiredService<Data.Repository.IUserRepository>().Get(user => user.Email == signInModel.Email)
                 }
-          }));
+            }));
         }
     }
 }

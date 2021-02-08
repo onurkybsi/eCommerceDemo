@@ -2,7 +2,7 @@ using Infrastructure.Data;
 
 namespace ecommerceDemo.Data.Model
 {
-    public class Address : Entity
+    public class Address : MongoDBEntity, IEntity
     {
         public string Country { get; set; }
         public string City { get; set; }

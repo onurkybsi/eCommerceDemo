@@ -65,7 +65,7 @@ namespace Infrastructure.Service
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim("Id", user.Id),
-                    new Claim(ClaimTypes.NameIdentifier, user.NameIdentifier),
+                    new Claim(ClaimTypes.Email, user.Email),
                 }),
 
                 Audience = _context.Audience,

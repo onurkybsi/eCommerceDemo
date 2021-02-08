@@ -24,7 +24,7 @@ namespace ecommerceDemo.Host
 
             var host = CreateHostBuilder(args, configuration).Build();
 
-            InitializeDatabase();
+            // InitializeDatabase();
 
             host.Run();
         }

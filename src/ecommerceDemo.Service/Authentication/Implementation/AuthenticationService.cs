@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Infrastructure.Service.Model;
 
 namespace ecommerceDemo.Service

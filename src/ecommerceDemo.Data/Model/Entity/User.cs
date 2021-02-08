@@ -2,7 +2,7 @@ using Infrastructure.Data;
 
 namespace ecommerceDemo.Data.Model
 {
-    public class User : Entity
+    public class User : MongoDBEntity, Infrastructure.Service.Model.IUser, IEntity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

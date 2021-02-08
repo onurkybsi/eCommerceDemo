@@ -2,7 +2,7 @@ using Infrastructure.Data;
 
 namespace ecommerceDemo.Data.Model
 {
-    public class Order : Entity
+    public class Order : MongoDBEntity, IEntity
     {
         public User Owner { get; set; }
         public Basket Basket { get; set; }
