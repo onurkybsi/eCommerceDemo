@@ -7,52 +7,52 @@ using static ecommerceDemo.Host.Common.Constants;
 
 namespace ecommerceDemo.Host
 {
-    public class SignUpModelValidator : ActionFilterAttribute
+    public class SignUpRequestValidator : ActionFilterAttribute
     {
         public async override Task OnActionExecutionAsync(ActionExecutingContext filterContext, ActionExecutionDelegate next)
         {
-            SignUpModel signUpModel = RequestModelActionFilterValidatorHelper.GetRequestModel<SignUpModel>(filterContext);
+            SignUpRequest signUpRequest = RequestModelActionFilterValidatorHelper.GetRequestModel<SignUpRequest>(filterContext);
 
-            ValidationResult validationResult = await ValidateSignUpModel(signUpModel);
+            ValidationResult validationResult = await ValidateSignUpRequest(signUpRequest);
 
             await RequestModelActionFilterValidatorHelper.FinalizeActionFilterValidator(validationResult, filterContext, next);
         }
 
-        private async Task<ValidationResult> ValidateSignUpModel(SignUpModel signUpModel)
+        private async Task<ValidationResult> ValidateSignUpRequest(SignUpRequest signUpRequest)
         {
             ValidationResult validationResult = new ValidationResult();
 
-            CheckHasDefaultValue(validationResult, signUpModel);
+            CheckHasDefaultValue(validationResult, signUpRequest);
             if (!validationResult.IsValid)
                 return validationResult;
 
-            CheckPasswordAvailability(validationResult, signUpModel.Password);
+            CheckPasswordAvailability(validationResult, signUpRequest.Password);
             if (!validationResult.IsValid)
                 return validationResult;
 
-            await CheckWhetherUserExist(validationResult, signUpModel.Email);
+            await CheckWhetherUserExist(validationResult, signUpRequest.Email);
             if (!validationResult.IsValid)
                 return validationResult;
 
             return validationResult;
         }
 
-        private void CheckHasDefaultValue(ValidationResult validationResult, SignUpModel signUpModel)
+        private void CheckHasDefaultValue(ValidationResult validationResult, SignUpRequest signUpRequest)
         {
-            if (signUpModel is null)
+            if (signUpRequest is null)
             {
                 validationResult.IsValid = false;
-                validationResult.Message = $"{ValidationMessages.ValueCanNotBeNull}: {nameof(SignUpModel)}";
+                validationResult.Message = $"{ValidationMessages.ValueCanNotBeNull}: {nameof(SignUpRequest)}";
             }
-            else if (string.IsNullOrEmpty(signUpModel.Email) || string.IsNullOrWhiteSpace(signUpModel.Email))
+            else if (string.IsNullOrEmpty(signUpRequest.Email) || string.IsNullOrWhiteSpace(signUpRequest.Email))
             {
                 validationResult.IsValid = false;
-                validationResult.Message = $"{ValidationMessages.StringCanNotBeNullEmptyOrWhiteSpace}: {nameof(SignUpModel.Email)}";
+                validationResult.Message = $"{ValidationMessages.StringCanNotBeNullEmptyOrWhiteSpace}: {nameof(SignUpRequest.Email)}";
             }
-            else if (string.IsNullOrEmpty(signUpModel.Password) || string.IsNullOrWhiteSpace(signUpModel.Password))
+            else if (string.IsNullOrEmpty(signUpRequest.Password) || string.IsNullOrWhiteSpace(signUpRequest.Password))
             {
                 validationResult.IsValid = false;
-                validationResult.Message = $"{ValidationMessages.StringCanNotBeNullEmptyOrWhiteSpace}: {nameof(SignUpModel.Password)}";
+                validationResult.Message = $"{ValidationMessages.StringCanNotBeNullEmptyOrWhiteSpace}: {nameof(SignUpRequest.Password)}";
             }
         }
 

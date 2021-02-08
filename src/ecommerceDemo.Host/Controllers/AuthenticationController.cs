@@ -23,8 +23,8 @@ namespace ecommerceDemo.Host.Controllers
         }
 
         [HttpPost]
-        [SignInModelValidator]
-        public async Task<IActionResult> SignUp([FromBody] SignUpModel newUser)
+        [SignUpRequestValidator]
+        public async Task<IActionResult> SignUp([FromBody] SignUpRequest newUser)
         {
             string hashedPass = Infrastructure.Service.EncryptionHelper.CreateHashed(newUser.Password);
 
@@ -41,7 +41,7 @@ namespace ecommerceDemo.Host.Controllers
         }
 
         [HttpPost]
-        [SignUpModelValidator]
+        [SignInModelValidator]
         public async Task<IActionResult> Login([FromBody] SignInModel signInModel)
         {
             var signInResult = await _authenticationService.Authenticate(signInModel);
