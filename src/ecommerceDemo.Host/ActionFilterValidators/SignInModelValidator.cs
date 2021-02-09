@@ -50,6 +50,15 @@ namespace ecommerceDemo.Host
             }
         }
 
+        private void CheckEmailAvailability(ValidationResult validationResult, string email)
+        {
+            if (!Infrastructure.Service.BasicValidationHelper.IsEmailValid(email))
+            {
+                validationResult.IsValid = false;
+                validationResult.Message = ValidationMessages.ValueInvalidForEmail;
+            }
+        }
+
         private void CheckPasswordAvailability(ValidationResult validationResult, string password)
         {
             if (password.Length < 4)

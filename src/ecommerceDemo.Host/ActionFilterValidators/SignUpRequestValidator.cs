@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ecommerceDemo.Host.Model;
 using Infrastructure.Service;
@@ -29,6 +30,10 @@ namespace ecommerceDemo.Host
             if (!validationResult.IsValid)
                 return validationResult;
 
+            CheckEmailAvailability(validationResult, signUpRequest.Email);
+            if (!validationResult.IsValid)
+                return validationResult;
+
             return validationResult;
         }
 
@@ -48,6 +53,15 @@ namespace ecommerceDemo.Host
             {
                 validationResult.IsValid = false;
                 validationResult.Message = $"{ValidationMessages.StringCanNotBeNullEmptyOrWhiteSpace}: {nameof(SignUpRequest.Password)}";
+            }
+        }
+
+        private void CheckEmailAvailability(ValidationResult validationResult, string email)
+        {
+            if (!Infrastructure.Service.BasicValidationHelper.IsEmailValid(email))
+            {
+                validationResult.IsValid = false;
+                validationResult.Message = ValidationMessages.ValueInvalidForEmail;
             }
         }
 
