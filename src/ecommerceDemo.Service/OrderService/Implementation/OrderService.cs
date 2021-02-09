@@ -18,20 +18,10 @@ namespace ecommerceDemo.Service
 
         public async Task CreateOrder(Order order)
             => await _orderRepository.Create(order);
-
-        public async Task FindAndUpdateOrder(Expression<Func<Order, bool>> filterDefinition, Action<Order> updateDefinition)
-            => await _orderRepository.FindAndUpdate(filterDefinition, updateDefinition);
-
         public async Task<Order> GetOrder(Expression<Func<Order, bool>> filter)
             => await _orderRepository.Get(filter);
 
         public async Task<List<Order>> GetOrders(Expression<Func<Order, bool>> filter = null)
             => await _orderRepository.GetList(filter);
-
-        public async Task RemoveOrder(Order order)
-            => await _orderRepository.Remove(order);
-
-        public async Task UpdateOrder(Order order)
-            => await _orderRepository.Update(order);
     }
 }

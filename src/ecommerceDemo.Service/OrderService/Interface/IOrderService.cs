@@ -11,8 +11,5 @@ namespace ecommerceDemo.Service
         Task<Order> GetOrder(Expression<Func<Order, bool>> filter);
         Task<List<Order>> GetOrders(Expression<Func<Order, bool>> filter = null);
         Task CreateOrder(Order order);
-        Task UpdateOrder(Order order);
-        Task FindAndUpdateOrder(Expression<Func<Order, bool>> filterDefinition, Action<Order> updateDefinition);
-        Task RemoveOrder(Order order);
     }
 }

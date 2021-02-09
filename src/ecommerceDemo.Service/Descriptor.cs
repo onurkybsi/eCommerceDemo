@@ -19,7 +19,8 @@ namespace ecommerceDemo.Service
 
             ServiceDescriptions.AddRange(GetDataModuleDescriptions());
             ServiceDescriptions.AddRange(GetDataServicesDescriptions());
-            ServiceDescriptions.Add(ServiceDescriptor.Singleton<IAuthenticationService, AuthenticationService>(sp => new AuthenticationService(ModuleContext.JwtAuthenticationContext)));
+            ServiceDescriptions.Add(ServiceDescriptor.Singleton<IAuthenticationService, AuthenticationService>(sp =>
+                new AuthenticationService(ModuleContext.JwtAuthenticationContext)));
 
             return ServiceDescriptions;
         }

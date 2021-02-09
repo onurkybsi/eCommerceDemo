@@ -4,34 +4,54 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ecommerceDemo.Data.Model;
 using ecommerceDemo.Data.Repository;
+using ecommerceDemo.Service.Common;
+using Infrastructure;
 
 namespace ecommerceDemo.Service
 {
     public class BasketService : IBasketService
     {
         private readonly IBasketRepository _basketRepository;
+        private readonly IProductService _productService;
 
-        public BasketService(IBasketRepository basketRepository)
+        public BasketService(IBasketRepository basketRepository, IProductService productService)
         {
             _basketRepository = basketRepository;
+            _productService = productService;
         }
 
-        public async Task CreateBasket(Basket basket)
-            => await _basketRepository.Create(basket);
+        public async Task<ProcessResult> AddToBasket(AddToBasketContext context)
+        {
+            ProcessResult addToBasketResult = new ProcessResult();
 
-        public async Task FindAndUpdateBasket(Expression<Func<Basket, bool>> filterDefinition, Action<Basket> updateDefinition)
-            => await _basketRepository.FindAndUpdate(filterDefinition, updateDefinition);
+            Basket updatedBasket = await _basketRepository.Get(ba => ba.Id == context.BasketId);
 
-        public async Task<Basket> GetBasket(Expression<Func<Basket, bool>> filter)
-            => await _basketRepository.Get(filter);
+            if (updatedBasket is null)
+            {
+                addToBasketResult.Message = Constants.BasketService.ThereIsNoSuchBasket;
+                return addToBasketResult;
+            }
 
-        public async Task<List<Basket>> GetBaskets(Expression<Func<Basket, bool>> filter = null)
-            => await _basketRepository.GetList(filter);
+            if (updatedBasket.IsOrdered)
+            {
+                addToBasketResult.Message = Constants.BasketService.BasketOrdered;
+                return addToBasketResult;
+            }
 
-        public async Task RemoveBasket(Basket basket)
-            => await _basketRepository.Remove(basket);
+            Product addedProduct = await _productService.GetProduct(product => product.Id == context.ProductId);
 
-        public async Task UpdateBasket(Basket basket)
-            => await _basketRepository.Update(basket);
+            if (addedProduct is null)
+            {
+                addToBasketResult.Message = Constants.BasketService.BeAddedProductDoesntExist;
+                return addToBasketResult;
+            }
+
+            updatedBasket.Products.Add(addedProduct);
+
+            await _basketRepository.Update(updatedBasket);
+
+            addToBasketResult.IsSuccessful = true;
+            return addToBasketResult;
+        }
     }
 }

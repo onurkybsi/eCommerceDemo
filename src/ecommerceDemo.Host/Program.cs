@@ -24,7 +24,7 @@ namespace ecommerceDemo.Host
 
             var host = CreateHostBuilder(args, configuration).Build();
 
-            // InitializeDatabase();
+            InitializeDatabase();
 
             host.Run();
         }
@@ -45,6 +45,7 @@ namespace ecommerceDemo.Host
                 FirstName = "Onur",
                 LastName = "Kayabasi",
                 Email = "onurbpm@outlook.com",
+                HashedPassword = Infrastructure.Service.EncryptionHelper.CreateHashed("testparola123")
             };
 
             Data.Utility.Initializer.ecommerceDb.InitializeRepository<Data.Model.User>(new List<Data.Model.User>
