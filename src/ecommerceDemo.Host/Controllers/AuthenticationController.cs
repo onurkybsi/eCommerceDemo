@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using ecommerceDemo.Host.Model;
 using ecommerceDemo.Service;
-using Infrastructure.Service.Model;
+using Infrastructure.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -34,15 +34,18 @@ namespace ecommerceDemo.Host.Controllers
                 HashedPassword = hashedPass,
             };
 
-            await _userService.CreateUser(createdUser);
-            _logger.LogInformation($"{createdUser.Id}-{createdUser.Id} signed in as user!");
+            var createUserResult = await _userService.CreateUser(createdUser);
+            if (createUserResult.IsSuccessful)
+            {
+                _logger.LogInformation($"{createdUser.Id}-{createdUser.Id} signed in as user!");
+            }
 
-            return Ok();
+            return Ok(createUserResult);
         }
 
         [HttpPost]
         [SignInModelValidator]
-        public async Task<IActionResult> Login([FromBody] SignInModel signInModel)
+        public async Task<IActionResult> SignIn([FromBody] SignInModel signInModel)
         {
             var signInResult = await _authenticationService.Authenticate(signInModel);
 

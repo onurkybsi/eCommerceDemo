@@ -5,6 +5,13 @@ namespace ecommerceDemo.Data.Repository.MongoDB
 {
     public class UserRepository : MongoDBCollectionBase<User>, IUserRepository
     {
-        public UserRepository(MongoDBCollectionSettings settings) : base(settings) { }
+        public UserRepository(MongoDBCollectionSettings settings) : base(settings)
+        {
+            AddUniqueIndexForEmailIfNotExist();
+        }
+
+        public void AddUniqueIndexForEmailIfNotExist()
+            => _collection.CreateUniqueIndex<Model.User>(nameof(Model.User.Email));
+
     }
 }

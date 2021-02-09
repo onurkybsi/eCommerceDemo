@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using ecommerceDemo.Host.Model;
 using Infrastructure.Service;
-using Infrastructure.Service.Model;
 using Microsoft.AspNetCore.Mvc.Filters;
 using static ecommerceDemo.Host.Common.Constants;
 
@@ -13,12 +12,12 @@ namespace ecommerceDemo.Host
         {
             SignUpRequest signUpRequest = RequestModelActionFilterValidatorHelper.GetRequestModel<SignUpRequest>(filterContext);
 
-            ValidationResult validationResult = await ValidateSignUpRequest(signUpRequest);
+            ValidationResult validationResult = ValidateSignUpRequest(signUpRequest);
 
             await RequestModelActionFilterValidatorHelper.FinalizeActionFilterValidator(validationResult, filterContext, next);
         }
 
-        private async Task<ValidationResult> ValidateSignUpRequest(SignUpRequest signUpRequest)
+        private ValidationResult ValidateSignUpRequest(SignUpRequest signUpRequest)
         {
             ValidationResult validationResult = new ValidationResult();
 
@@ -27,10 +26,6 @@ namespace ecommerceDemo.Host
                 return validationResult;
 
             CheckPasswordAvailability(validationResult, signUpRequest.Password);
-            if (!validationResult.IsValid)
-                return validationResult;
-
-            await CheckWhetherUserExist(validationResult, signUpRequest.Email);
             if (!validationResult.IsValid)
                 return validationResult;
 
@@ -63,12 +58,6 @@ namespace ecommerceDemo.Host
                 validationResult.IsValid = false;
                 validationResult.Message = ValidationMessages.PasswordMustBeMoreThanFourCharacters;
             }
-        }
-
-        private async Task CheckWhetherUserExist(ValidationResult validationResult, string email)
-        {
-            validationResult.IsValid = (await Startup.GetInstance<Service.IUserService>().GetUser(u => u.Email == email)) is null;
-            validationResult.Message = validationResult.IsValid ? string.Empty : ValidationMessages.UserAlreadyExists;
         }
     }
 }

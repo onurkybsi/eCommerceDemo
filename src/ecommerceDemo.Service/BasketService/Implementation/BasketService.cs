@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ecommerceDemo.Data.Model;
 using ecommerceDemo.Data.Repository;
 using ecommerceDemo.Service.Common;
-using Infrastructure;
+using Infrastructure.Model;
 
 namespace ecommerceDemo.Service
 {
@@ -20,38 +17,62 @@ namespace ecommerceDemo.Service
             _productService = productService;
         }
 
-        public async Task<ProcessResult> AddToBasket(AddToBasketContext context)
+        public async Task<ProcessResult> AddProductToBasket(AddProductToBasketContext context)
         {
             ProcessResult addToBasketResult = new ProcessResult();
 
-            Basket updatedBasket = await _basketRepository.Get(ba => ba.Id == context.BasketId);
+            Basket targetBasket = await _basketRepository.Get(ba => ba.Id == context.BasketId);
 
-            if (updatedBasket is null)
-            {
-                addToBasketResult.Message = Constants.BasketService.ThereIsNoSuchBasket;
+            if (!CheckBasketIsValidToAdd(targetBasket, addToBasketResult))
                 return addToBasketResult;
-            }
 
-            if (updatedBasket.IsOrdered)
-            {
-                addToBasketResult.Message = Constants.BasketService.BasketOrdered;
+            Product productToAdd = await _productService.GetProduct(product => product.Id == context.ProductId);
+
+            if (!CheckProductToAddIsValid(productToAdd, addToBasketResult))
                 return addToBasketResult;
-            }
 
-            Product addedProduct = await _productService.GetProduct(product => product.Id == context.ProductId);
-
-            if (addedProduct is null)
-            {
-                addToBasketResult.Message = Constants.BasketService.BeAddedProductDoesntExist;
-                return addToBasketResult;
-            }
-
-            updatedBasket.Products.Add(addedProduct);
-
-            await _basketRepository.Update(updatedBasket);
-
+            await UpdateBasketWithNewProduct(targetBasket, productToAdd);
             addToBasketResult.IsSuccessful = true;
+
             return addToBasketResult;
+        }
+
+        private bool CheckBasketIsValidToAdd(Basket basketToAdd, ProcessResult proccessedResult)
+        {
+            bool isValid = true;
+
+            if (basketToAdd is null)
+            {
+                proccessedResult.Message = Constants.BasketService.ThereIsNoSuchBasket;
+                isValid = false;
+            }
+            else if (basketToAdd.IsOrdered)
+            {
+                proccessedResult.Message = Constants.BasketService.BasketOrdered;
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        private bool CheckProductToAddIsValid(Product productToAdd, ProcessResult proccessedResult)
+        {
+            bool isValid = true;
+
+            if (productToAdd is null)
+            {
+                proccessedResult.Message = Constants.BasketService.BeAddedProductDoesntExist;
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        private async Task UpdateBasketWithNewProduct(Basket basket, Product product)
+        {
+            basket.Products.Add(product);
+
+            await _basketRepository.Update(basket);
         }
     }
 }

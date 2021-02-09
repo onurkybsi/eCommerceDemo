@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using ecommerceDemo.Host.Model;
 using ecommerceDemo.Service;
-using Infrastructure.Service.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -25,8 +24,15 @@ namespace ecommerceDemo.Host.Controllers
         }
 
         [HttpPost]
-        [AddToBasketRequestValidator]
-        public async Task<IActionResult> AddToBasket([FromBody] AddToBasketRequest request)
-            => Ok(await _basketService.AddToBasket(new AddToBasketContext { BasketId = request.BasketId, ProductId = request.ProductId }));
+        [AddProductToBasketValidator]
+        public async Task<IActionResult> AddProductToBasket([FromBody] AddProductToBasketRequest request)
+        {
+            var response = await _basketService.AddProductToBasket(new AddProductToBasketContext { BasketId = request.BasketId, ProductId = request.ProductId });
+
+            if (response.IsSuccessful)
+                _logger.LogInformation($"Product {request.ProductId} added to basket {request.BasketId}");
+
+            return Ok(response);
+        }
     }
 }

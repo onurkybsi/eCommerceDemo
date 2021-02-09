@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Infrastructure.Service.Model;
+using Infrastructure.Service;
 
 namespace ecommerceDemo.Service
 {

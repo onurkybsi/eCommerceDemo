@@ -27,7 +27,7 @@ namespace ecommerceDemo.Host
         {
             RegisterModules(services);
 
-            services.AddBasicJwtAuthentication(new Infrastructure.Host.Model.JwtAuthenticationContext
+            services.AddBasicJwtAuthentication(new JwtAuthenticationContext
             {
                 SecurityKey = Configuration["Jwt_SecurityKey"],
                 Issuer = Configuration["Jwt_Issuer"],
@@ -77,7 +77,7 @@ namespace ecommerceDemo.Host
                         ConnectionString = Configuration["ecommerceDemoDb_ConnectionStrings_MySQL"]
                     }
                 },
-                JwtAuthenticationContext = new Infrastructure.Service.Model.JwtAuthenticationContext
+                JwtAuthenticationContext = new Infrastructure.Service.JwtAuthenticationContext
                 {
                     SecurityKey = Configuration["Jwt_SecurityKey"],
                     Issuer = Configuration["Jwt_Issuer"],

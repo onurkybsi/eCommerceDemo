@@ -1,4 +1,4 @@
-using Infrastructure.Service.Model;
+using Infrastructure.Service;
 
 namespace ecommerceDemo.Service.Model
 {

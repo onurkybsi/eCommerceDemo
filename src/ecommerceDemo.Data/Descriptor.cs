@@ -57,25 +57,7 @@ namespace ecommerceDemo.Data
                     }))
             };
 
-        // private static List<ServiceDescriptor> GetMySQLRepositoryDescriptions()
-        // {
-        //     Repository.MySQL.ecommerceDbContext context = new Repository.MySQL.ecommerceDbContext(ModuleContext.MySQLSettings);
-
-        //     List<ServiceDescriptor> MySQLRepositoryDescriptions = new List<ServiceDescriptor>
-        //     {
-        //         ServiceDescriptor.Singleton<IProductRepository, Repository.MySQL.ProductRepository>(sp => new Repository.MySQL.ProductRepository(context)),
-        //         ServiceDescriptor.Singleton<IOrderRepository, Repository.MySQL.OrderRepository>(sp => new Repository.MySQL.OrderRepository(context)),
-        //         ServiceDescriptor.Singleton<ICategoryRepository, Repository.MySQL.CategoryRepository>(sp => new Repository.MySQL.CategoryRepository(context)),
-        //         ServiceDescriptor.Singleton<IAddressRepository, Repository.MySQL.AddressRepository>(sp => new Repository.MySQL.AddressRepository(context)),
-        //         ServiceDescriptor.Singleton<IBasketRepository, Repository.MySQL.BasketRepository>(sp => new Repository.MySQL.BasketRepository(context))
-        //     };
-
-        //     return MySQLRepositoryDescriptions;
-        // }
-
         public override List<ServiceDescriptor> GetDescriptions()
-        {
-            return GetMongoDBCollectionDescriptions();
-        }
+            => GetMongoDBCollectionDescriptions();
     }
 }

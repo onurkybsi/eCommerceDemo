@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Infrastructure.Service;
-using Infrastructure.Service.Model;
 using Microsoft.AspNetCore.Mvc.Filters;
 using static ecommerceDemo.Host.Common.Constants;
 

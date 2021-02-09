@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
-using Infrastructure;
+using Infrastructure.Model;
 
 namespace ecommerceDemo.Service
 {
     public interface IBasketService
     {
-        Task<ProcessResult> AddToBasket(AddToBasketContext context);
+        Task<ProcessResult> AddProductToBasket(AddProductToBasketContext context);
     }
 }

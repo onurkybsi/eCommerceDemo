@@ -4,6 +4,8 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ecommerceDemo.Data.Model;
 using ecommerceDemo.Data.Repository;
+using ecommerceDemo.Service.Common;
+using Infrastructure.Model;
 
 namespace ecommerceDemo.Service
 {
@@ -16,8 +18,23 @@ namespace ecommerceDemo.Service
             _userRepository = userRepository;
         }
 
-        public async Task CreateUser(User user)
-            => await _userRepository.Create(user);
+        public async Task<ProcessResult> CreateUser(User user)
+        {
+            ProcessResult createUserProcessResult= new ProcessResult();
+
+            bool userExistByEmail = await _userRepository.Get(u => u.Email == user.Email) != null;
+
+            if(userExistByEmail) 
+            {
+                createUserProcessResult.Message = Constants.UserService.EmailAlreadyExist;
+                return createUserProcessResult;
+            }
+
+            await _userRepository.Create(user);
+
+            createUserProcessResult.IsSuccessful = true;
+            return createUserProcessResult;
+        }
 
         public async Task FindAndUpdateUser(Expression<Func<User, bool>> filterDefinition, Action<User> updateDefinition)
             => await _userRepository.FindAndUpdate(filterDefinition, updateDefinition);

@@ -3,7 +3,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Infrastructure.Service.Model;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Service

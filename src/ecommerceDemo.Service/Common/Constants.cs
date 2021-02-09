@@ -8,5 +8,10 @@ namespace ecommerceDemo.Service.Common
             public const string BasketOrdered = "BasketOrdered";
             public const string BeAddedProductDoesntExist = "BeAddedProductDoesntExist";
         }
+
+        public static class UserService
+        {
+            public const string EmailAlreadyExist = "EmailAlreadyExist";
+        }
     }
 }
