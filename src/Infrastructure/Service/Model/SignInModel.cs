@@ -1,4 +1,4 @@
-namespace Infrastructure.Service.Model
+namespace Infrastructure.Service
 {
     public class SignInModel
     {

@@ -17,7 +17,7 @@ namespace Infrastructure.Host
             return services;
         }
 
-        public static IServiceCollection AddBasicJwtAuthentication(this IServiceCollection services, Model.JwtAuthenticationContext context)
+        public static IServiceCollection AddBasicJwtAuthentication(this IServiceCollection services, JwtAuthenticationContext context)
         {
             bool envIsDevelopment = context.Environment != Environment.Development;
 

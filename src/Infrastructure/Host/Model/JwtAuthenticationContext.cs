@@ -1,4 +1,6 @@
-namespace Infrastructure.Host.Model
+using Infrastructure.Model;
+
+namespace Infrastructure.Host
 {
     public class JwtAuthenticationContext : JwtAuthenticationBaseContext
     {
