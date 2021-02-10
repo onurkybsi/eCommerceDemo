@@ -13,5 +13,11 @@ namespace ecommerceDemo.Service.Common
         {
             public const string EmailAlreadyExist = "EmailAlreadyExist";
         }
+
+        public static class ProductService
+        {
+            public const string ProductToAddAlreadyExist = "ProductToAddAlreadyExist";
+            public const string ThereIsNoSuchCategory = "ThereIsNoSuchCategory";
+        }
     }
 }

@@ -45,7 +45,8 @@ namespace ecommerceDemo.Host
                 FirstName = "Onur",
                 LastName = "Kayabasi",
                 Email = "onurbpm@outlook.com",
-                HashedPassword = Infrastructure.Service.EncryptionHelper.CreateHashed("testparola123")
+                HashedPassword = Infrastructure.Service.EncryptionHelper.CreateHashed("testparola123"),
+                Role = Infrastructure.Service.Constants.JwtAuthenticationService.UserRole.Admin
             };
 
             Data.Utility.Initializer.ecommerceDb.InitializeRepository<Data.Model.User>(new List<Data.Model.User>

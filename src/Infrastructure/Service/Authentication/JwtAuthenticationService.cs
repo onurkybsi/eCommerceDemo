@@ -65,6 +65,7 @@ namespace Infrastructure.Service
                 {
                     new Claim("Id", user.Id),
                     new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Role, user.Role)
                 }),
 
                 Audience = _context.Audience,

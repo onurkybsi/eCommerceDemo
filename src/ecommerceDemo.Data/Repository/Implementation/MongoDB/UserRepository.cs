@@ -10,8 +10,7 @@ namespace ecommerceDemo.Data.Repository.MongoDB
             AddUniqueIndexForEmailIfNotExist();
         }
 
-        public void AddUniqueIndexForEmailIfNotExist()
+        private void AddUniqueIndexForEmailIfNotExist()
             => _collection.CreateUniqueIndex<Model.User>(nameof(Model.User.Email));
-
     }
 }

@@ -20,5 +20,8 @@ namespace ecommerceDemo.Service
 
         public async Task<List<Category>> GetCategories(Expression<Func<Category, bool>> filter = null)
             => await _categoryRepository.GetList(filter);
+
+        public Task CreateCategory(Category category)
+            => _categoryRepository.Create(category);
     }
 }

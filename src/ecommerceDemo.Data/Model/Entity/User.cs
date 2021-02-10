@@ -9,5 +9,6 @@ namespace ecommerceDemo.Data.Model
         public string Email { get; set; }
         public string HashedPassword { get; set; }
         public string Token { get; set; }
+        public string Role { get; set; } = Infrastructure.Service.Constants.JwtAuthenticationService.UserRole.User;
     }
 }
