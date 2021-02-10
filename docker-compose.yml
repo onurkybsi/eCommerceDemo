@@ -29,11 +29,11 @@ services:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
   ecommercedemo:
-    build: ./src
+    build: ./src/
     ports: 
       - "8080:80"
     env_file:
-      - ./src/.env
+      - ./src/ecommerceDemo.Host/.env
     depends_on:
       - ecommerceDemoDb
       - elasticsearch

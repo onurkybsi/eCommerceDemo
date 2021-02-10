@@ -18,11 +18,6 @@ namespace ecommerceDemo.Host
 
         public IConfiguration Configuration { get; }
 
-        private static IServiceProvider ServiceProvider { get; set; }
-
-        public static T GetInstance<T>()
-            => ServiceProvider.GetRequiredService<T>();
-
         public void ConfigureServices(IServiceCollection services)
         {
             RegisterModules(services);
@@ -54,8 +49,6 @@ namespace ecommerceDemo.Host
             {
                 endpoints.MapControllers();
             });
-
-            ServiceProvider = app.ApplicationServices;
 
             Serilog.Log.ForContext<Startup>().Information("{Application} is listening on {Env}...", Configuration["AppName"], env.EnvironmentName);
         }
