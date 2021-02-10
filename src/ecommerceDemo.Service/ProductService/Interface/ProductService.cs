@@ -21,8 +21,9 @@ namespace ecommerceDemo.Service
         public async Task<ProcessResult> CreateProduct(CreateProductContext context)
         {
             ProcessResult createProductProcessResult = new ProcessResult();
+            Category categoryOfProduct = await _categoryService.GetCategory(c => c.Name == context.CategoryName);
 
-            if (!(await CheckCreateProductProcessIsValid(context.Name, context.CategoryName, createProductProcessResult)))
+            if (!(await CheckCreateProductProcessIsValid(context.Name, categoryOfProduct, createProductProcessResult)))
                 return createProductProcessResult;
 
             Product productToCreate = new Product
@@ -30,7 +31,7 @@ namespace ecommerceDemo.Service
                 Name = context.Name,
                 Price = context.Price,
                 Description = context.Description,
-                Category = new Category { Name = context.CategoryName }
+                Category = categoryOfProduct
             };
 
             await _productRepository.Create(productToCreate);
@@ -39,7 +40,7 @@ namespace ecommerceDemo.Service
             return createProductProcessResult;
         }
 
-        private async Task<bool> CheckCreateProductProcessIsValid(string productName, string categoryName, ProcessResult proccessedResult)
+        private async Task<bool> CheckCreateProductProcessIsValid(string productName, Category categoryOfProduct, ProcessResult proccessedResult)
         {
             Product productToCreate = await _productRepository.Get(p => p.Name == productName);
 
@@ -48,8 +49,6 @@ namespace ecommerceDemo.Service
                 proccessedResult.Message = Constants.ProductService.ProductToAddAlreadyExist;
                 return false;
             }
-
-            Category categoryOfProduct = await _categoryService.GetCategory(c => c.Name == categoryName);
 
             if (categoryOfProduct is null)
             {

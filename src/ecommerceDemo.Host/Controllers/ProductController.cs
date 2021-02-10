@@ -27,7 +27,7 @@ namespace ecommerceDemo.Host.Controllers
         {
             var response = await _productService.CreateProduct(new CreateProductContext
             {
-                Name = request.CategoryName,
+                Name = request.Name,
                 Price = request.Price,
                 Description = request.Description,
                 CategoryName = request.CategoryName
@@ -37,7 +37,6 @@ namespace ecommerceDemo.Host.Controllers
         }
 
         [HttpGet]
-        [AddProductToBasketValidator]
         public async Task<IActionResult> GetAllProducts()
             => Ok(await _productService.GetAllProducts());
     }

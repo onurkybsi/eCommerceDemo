@@ -2,6 +2,7 @@ using Infrastructure.Data;
 using ecommerceDemo.Data.Model;
 using System.Threading.Tasks;
 using MongoDB.Bson;
+using System.Collections.Generic;
 
 namespace ecommerceDemo.Data.Repository.MongoDB
 {
@@ -15,7 +16,8 @@ namespace ecommerceDemo.Data.Repository.MongoDB
 
             Basket basket = new Basket
             {
-                Id = id
+                Id = id,
+                Products = new List<Product>()
             };
 
             await _collection.InsertOneAsync(basket);
