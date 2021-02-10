@@ -14,14 +14,18 @@ namespace ecommerceDemo.Host.Controllers
     {
         private readonly IAuthenticationService _authenticationService;
         private readonly IBasketService _basketService;
-        private readonly ILogger<AuthenticationController> _logger;
+        private readonly ILogger<BasketController> _logger;
 
-        public BasketController(IAuthenticationService authenticationService, IBasketService basketService, ILogger<AuthenticationController> logger)
+        public BasketController(IAuthenticationService authenticationService, IBasketService basketService, ILogger<BasketController> logger)
         {
             _authenticationService = authenticationService;
             _basketService = basketService;
             _logger = logger;
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBasket()
+            => Ok(await _basketService.CreateNewBasket());
 
         [HttpPost]
         [AddProductToBasketValidator]

@@ -25,6 +25,7 @@ namespace ecommerceDemo.Data.Repository
         {
             public static string Name = "Category";
             public static CreateCollectionOptions MongoDBCreateCollectionOptions = null;
+            public static Action<IMongoCollection<Model.Category>> InitialAction = (collection) => collection.CreateUniqueIndex(nameof(Model.Category.Name));
         }
 
         public static class BasketRepository

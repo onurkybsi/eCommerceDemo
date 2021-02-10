@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ecommerceDemo.Data.Model;
+using Infrastructure.Model;
 
 namespace ecommerceDemo.Service
 {
     public interface ICategoryService
     {
         Task<Category> GetCategory(Expression<Func<Category, bool>> filter);
-        Task<List<Category>> GetCategories(Expression<Func<Category, bool>> filter = null);
-        Task CreateCategory(Category category);
+        Task<List<Category>> GetAllCategories();
+        Task<ProcessResult> CreateCategory(CreateCategoryContext context);
     }
 }

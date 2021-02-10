@@ -5,7 +5,7 @@ namespace ecommerceDemo.Service
 {
     public interface IBasketService
     {
-        Task<string> CreateNewBasket();
+        Task<ProcessResult> CreateNewBasket();
         Task<ProcessResult> AddProductToBasket(AddProductToBasketContext context);
     }
 }

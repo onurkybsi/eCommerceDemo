@@ -13,9 +13,9 @@ namespace ecommerceDemo.Host.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
-        private readonly ILogger<AuthenticationController> _logger;
+        private readonly ILogger<ProductController> _logger;
 
-        public ProductController(IProductService productService, ILogger<AuthenticationController> logger)
+        public ProductController(IProductService productService, ILogger<ProductController> logger)
         {
             _productService = productService;
             _logger = logger;
@@ -25,18 +25,20 @@ namespace ecommerceDemo.Host.Controllers
         [CreateNewProductRequestValidator]
         public async Task<IActionResult> CreateNewProduct([FromBody] CreateNewProductRequest request)
         {
-            
+            var response = await _productService.CreateProduct(new CreateProductContext
+            {
+                Name = request.CategoryName,
+                Price = request.Price,
+                Description = request.Description,
+                CategoryName = request.CategoryName
+            });
 
-            return Ok();
+            return Ok(response);
         }
 
         [HttpGet]
         [AddProductToBasketValidator]
         public async Task<IActionResult> GetAllProducts()
-        {
-            
-
-            return Ok();
-        }
+            => Ok(await _productService.GetAllProducts());
     }
 }

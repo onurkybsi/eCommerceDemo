@@ -19,5 +19,10 @@ namespace ecommerceDemo.Service.Common
             public const string ProductToAddAlreadyExist = "ProductToAddAlreadyExist";
             public const string ThereIsNoSuchCategory = "ThereIsNoSuchCategory";
         }
+
+        public static class CategoryService
+        {
+            public const string CategoryToCreateAlreadyExist = "CategoryToCreateAlreadyExist";
+        }
     }
 }

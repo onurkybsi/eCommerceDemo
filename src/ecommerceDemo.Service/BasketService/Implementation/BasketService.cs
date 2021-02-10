@@ -17,8 +17,14 @@ namespace ecommerceDemo.Service
             _productService = productService;
         }
 
-        public async Task<string> CreateNewBasket()
-            => await _basketRepository.Create();
+        public async Task<ProcessResult> CreateNewBasket()
+        {
+            ProcessResult createNewBasketProcessResult = new ProcessResult();
+
+            createNewBasketProcessResult.Message = await _basketRepository.Create();
+            createNewBasketProcessResult.IsSuccessful = true;
+            return createNewBasketProcessResult;
+        }
 
         public async Task<ProcessResult> AddProductToBasket(AddProductToBasketContext context)
         {

@@ -4,6 +4,8 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ecommerceDemo.Data.Model;
 using ecommerceDemo.Data.Repository;
+using ecommerceDemo.Service.Common;
+using Infrastructure.Model;
 
 namespace ecommerceDemo.Service
 {
@@ -18,10 +20,37 @@ namespace ecommerceDemo.Service
         public async Task<Category> GetCategory(Expression<Func<Category, bool>> filter)
             => await _categoryRepository.Get(filter);
 
-        public async Task<List<Category>> GetCategories(Expression<Func<Category, bool>> filter = null)
-            => await _categoryRepository.GetList(filter);
+        public async Task<List<Category>> GetAllCategories()
+            => await _categoryRepository.GetList();
 
-        public Task CreateCategory(Category category)
-            => _categoryRepository.Create(category);
+        public async Task<ProcessResult> CreateCategory(CreateCategoryContext context)
+        {
+            ProcessResult createCategoryProcessResult = new ProcessResult();
+
+            if (!(await CheckCreateCategoryProcessIsValid(context.Name, createCategoryProcessResult)))
+                return createCategoryProcessResult;
+
+            Category categoryToCreate = new Category
+            {
+                Name = context.Name,
+            };
+
+            await _categoryRepository.Create(categoryToCreate);
+
+            createCategoryProcessResult.IsSuccessful = true;
+            return createCategoryProcessResult;
+        }
+
+        private async Task<bool> CheckCreateCategoryProcessIsValid(string categoryNameToCreate, ProcessResult proccessedResult)
+        {
+            Category categoryToCreate = await _categoryRepository.Get(p => p.Name == categoryNameToCreate);
+
+            if (categoryToCreate != null)
+            {
+                proccessedResult.Message = Constants.CategoryService.CategoryToCreateAlreadyExist;
+                return false;
+            }
+            return true;
+        }
     }
 }
