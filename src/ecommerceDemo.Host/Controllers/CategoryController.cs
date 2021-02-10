@@ -22,7 +22,7 @@ namespace ecommerceDemo.Host.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllCategory()
+        public async Task<IActionResult> GetAllCategories()
             => Ok(await _categoryService.GetAllCategories());
 
         [HttpPost]

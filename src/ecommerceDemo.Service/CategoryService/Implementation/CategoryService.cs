@@ -35,7 +35,7 @@ namespace ecommerceDemo.Service
                 Name = context.Name,
             };
 
-            await _categoryRepository.Create(categoryToCreate);
+            createCategoryProcessResult.Message = await _categoryRepository.CreateCategoryAndGetItsId(categoryToCreate);
 
             createCategoryProcessResult.IsSuccessful = true;
             return createCategoryProcessResult;
